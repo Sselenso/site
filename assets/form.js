@@ -1,73 +1,39 @@
-<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", function() {
   var showFormBtn = document.getElementById("show-form");
   var closeFormBtn = document.getElementById("close-form");
   var formPopup = document.getElementById("myForm");
 
-  // Показываем форму при нажатии кнопки "Записаться"
+  // Show the form when "Sign up" button is clicked
   showFormBtn.addEventListener("click", function() {
     formPopup.style.display = "block";
   });
 
-  // Скрываем форму при нажатии кнопки "Отмена"
+  // Hide the form when "Cancel" button is clicked
   closeFormBtn.addEventListener("click", function() {
     formPopup.style.display = "none";
   });
 });
 
+function sendTelegramMessage(form) {
+  const url = form.querySelector('input[name="url"]').value;
+  const captain = form.querySelector('input[name="captain"]').value;
+  const team = form.querySelector('textarea[name="team"]').value;
 
-// Получаем элементы формы
-const form = document.querySelector('.form-container');
-const captainInput = form.querySelector('input[name="captain"]');
-const teamInput = form.querySelector('textarea[name="team"]"');
+  const message = `New application:%0ACaptain: ${captain}%0ATeam: ${team}`;
 
-// Обработчик отправки формы
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  
-  // Формируем сообщение для отправки в Telegram
-  const message = `Новая заявка на участие:\n\nКапитан: ${captainInput.value}\nСостав команды: ${teamInput.value}`;
-  
-  // Формируем ссылку для открытия чата в Telegram
-  const telegramLink = `tg://msg?text=${encodeURIComponent(message)}&to=Sselsno`;
-  
-  // Открываем ссылку в Telegram
-  window.location.href = telegramLink;
-});
-=======
-document.addEventListener("DOMContentLoaded", function() {
-  var showFormBtn = document.getElementById("show-form");
-  var closeFormBtn = document.getElementById("close-form");
-  var formPopup = document.getElementById("myForm");
+  const telegramBotToken = '6233062235:AAHqGmnsqpQedV6OzKSd23xJYIVjRYey_fc';
+  const telegramChatId = '742627429';
 
-  // Показываем форму при нажатии кнопки "Записаться"
-  showFormBtn.addEventListener("click", function() {
-    formPopup.style.display = "block";
-  });
-
-  // Скрываем форму при нажатии кнопки "Отмена"
-  closeFormBtn.addEventListener("click", function() {
-    formPopup.style.display = "none";
-  });
-});
-
-
-// Получаем элементы формы
-const form = document.querySelector('.form-container');
-const captainInput = form.querySelector('input[name="captain"]');
-const teamInput = form.querySelector('textarea[name="team"]"');
-
-// Обработчик отправки формы
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  
-  // Формируем сообщение для отправки в Telegram
-  const message = `Новая заявка на участие:\n\nКапитан: ${captainInput.value}\nСостав команды: ${teamInput.value}`;
-  
-  // Формируем ссылку для открытия чата в Telegram
-  const telegramLink = `tg://msg?text=${encodeURIComponent(message)}&to=Sselsno`;
-  
-  // Открываем ссылку в Telegram
-  window.location.href = telegramLink;
-});
->>>>>>> 2fd7ce904016d59ec97e0b1f6fb07c852fdb846b
+  const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${telegramChatId}&text=${encodeURIComponent(message)}`;
+  fetch(telegramUrl)
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+        // Если сообщение успешно отправлено, открываем чат
+        window.open(url);
+      } else {
+        // Если произошла ошибка, выводим сообщение об ошибке
+        alert('Ошибка при отправке сообщения в Telegram');
+      }
+    });
+}

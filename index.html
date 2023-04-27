@@ -137,25 +137,20 @@
               </div>
             </div>
           </div>
+				<!--
 					<div class="recodr"><a class="link app-link" href="https://t.me/Sselenso?start=chat">Записаться</a>
 					</div>
-
+-->
 					<button id="show-form">Записаться</button>
 
 					<div class="form-popup" id="myForm">
-<<<<<<< HEAD
-						<form action="https://sselenso.github.io/site/" method="GET" class="form-container">
-=======
-						<form action="./assets/form.js" method="GET" class="form-container">
->>>>>>> 2fd7ce904016d59ec97e0b1f6fb07c852fdb846b
-							<h2>Заявка на участие</h2>
-						
-							<label for="captain"><b>Капитан</b></label>
+						<form method="POST" class="form-container" onsubmit="event.preventDefault(); sendTelegramMessage(this);">
+							<input type="hidden" name="url" value="tg://resolve?domain=sselenso">
+							<h2 class="subtitle form-subtitle">Заявка на участие</h2>
+							<label for="captain"><div class="comand comand-cap">Капитан</div></label>
 							<input type="text" placeholder="Введите имя капитана" name="captain" required>
-						
-							<label for="team"><b>Состав команды</b></label>
+							<label for="team"><div class="comand comand-structure">Состав команды</div></label>
 							<textarea name="team" placeholder="Введите состав команды" rows="4" cols="50"></textarea>
-							
 							<button type="submit" class="btn">Отправить</button>
 							<button type="button" class="btn cancel" id="close-form">Отмена</button>
 						</form>
